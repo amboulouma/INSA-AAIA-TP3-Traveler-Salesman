@@ -43,22 +43,20 @@ void permut(int vus[], int nbVus, int nonVus[], int nbNonVus, int longueur)
      - longueur = somme des couts des arcs du chemin <vus[0], vus[1], ..., vus[nbVus-1]>
     */
 
-    int sum = 0;
-
     if (nbNonVus == 0)
     {
-        for (int i = 0; i < nbVus - 1; i++)
-            sum += cout[i][i + 1];
-        printf("%d\n", sum);
+        longueur += cout[vus[nbVus - 1]][vus[0]];
+        printf("%d\n", longueur);
     }
 
     for (int i = 0; i < nbNonVus; i++)
     {
         vus[nbVus] = nonVus[i];
         nonVus[i] = nonVus[nbNonVus - 1];
+        longueur += cout[vus[nbVus - 1]][vus[nbVus]];
         permut(vus, nbVus + 1, nonVus, nbNonVus - 1, longueur);
+        longueur -= cout[vus[nbVus - 1]][vus[nbVus]];
         nonVus[i] = vus[nbVus];
-        vus[nbVus] = 0;
     }
 
     /*
